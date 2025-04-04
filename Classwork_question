@@ -1,0 +1,100 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class MyApp {
+protected:
+    int regNo;
+    float marks;
+    int pin;
+
+public:
+    void welcome_message() {
+        cout << "Welcome to MyApp!" << endl;
+    }
+
+    void login() {
+        cout << "Enter PIN: ";
+        cin >> pin;
+        if (pin == 123) {
+            cout << "Login successful!" << endl;
+        } else {
+            cout << "Invalid PIN!" << endl;
+            exit(0);
+        }
+    }
+
+    void accept() {
+        cout << "Enter Registration Number: ";
+        cin >> regNo;
+        cout << "Enter Marks: ";
+        cin >> marks;
+    }
+
+    void display() {
+        cout << "Registration Number: " << regNo << endl;
+        cout << "Marks: " << marks << endl;
+    }
+
+    float getMarks() {
+        return marks;
+    }
+};
+
+class GradeCal : public MyApp {
+protected:
+    string grade;  // ? Moved grade as a protected member so CourseSelection can access it
+
+public:
+    void calc() {
+        float percentage = (marks / 100) * 100;
+        cout << "Percentage: " << percentage << "%" << endl;
+        
+        if (percentage >= 80 && percentage <= 100) {
+            grade = "A";
+            cout << "Grade: A" << endl;
+        } else if (percentage >= 70 && percentage < 80) {
+            grade = "B";
+            cout << "Grade: B" << endl;
+        } else if (percentage >= 60 && percentage < 70) {
+            grade = "C";
+            cout << "Grade: C" << endl;
+        } else {
+            grade = "Not Qualified";
+            cout << "Not Qualified in C++" << endl;
+        }
+    }
+    
+    string getGrade() {
+        return grade;
+    }
+};
+
+class CourseSelection : public GradeCal {
+public:
+    void select() {
+        cout << "Course Selection based on Grade: " << grade << endl;
+        if (grade == "A") {
+            cout << "Available Courses: Cyber Security, .NET Programming" << endl;
+        } else if (grade == "B") {
+            cout << "Available Courses: Ethical Hacking, Full Stack Development" << endl;
+        } else if (grade == "C") {
+            cout << "Available Courses: MERN Programming, AI/ML" << endl;
+        } else {
+            cout << "No course available as the student is not qualified." << endl;
+        }
+    }
+};
+
+int main() {
+    CourseSelection student;
+    student.welcome_message();
+    student.login();
+    student.accept();
+    student.display();
+    student.calc();
+    student.select();
+
+    return 0;
+}
